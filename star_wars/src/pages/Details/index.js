@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { BackHandler, Button } from 'react-native';
+import { BackHandler, ActivityIndicator } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../../services/api';
+
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import { Container, ImagePerson, ImageMinor, Info, Name, BoxData, TextData, BtnFavorite, TextBtn } from './styles';
 
@@ -9,15 +12,16 @@ export default function Details({ navigation }) {
 
     const [person, setPerson] = useState('');
     const [loading, setLoading] = useState(false);
+    const [favorite, setFavorite] = useState(false);
 
     async function loadPerson() {
         setLoading(true);
 
         const response = await api.get(`/${params.id}`);
         setPerson(response['data']);
-        console.log(response['data']);
 
         setLoading(false);
+        verifyFavorite(response['data']);
     }
 
     useEffect(() => {
@@ -36,67 +40,135 @@ export default function Details({ navigation }) {
     }, [])
 
 
+    function verifyFavorite(value) {
+        try {
+            AsyncStorage.getItem('@favorites').then((person) => {
+                const p = person ? JSON.parse(person) : [];
+                //Verificando se já existe no array de favoritos
+                var verifyPerson = p.find((el) => {
+                    return el.name === value.name
+                })
+
+                if (verifyPerson != undefined) {
+                    setFavorite(true);
+                } else {
+                    setFavorite(false);
+                }
+
+
+            });
+        } catch (e) {
+            // saving error
+        }
+    }
+
+
+    const addFavorite = async (value) => {
+        try {
+            AsyncStorage.getItem('@favorites')
+                .then((person) => {
+                    const p = person ? JSON.parse(person) : [];
+                    //Verificando se já existe no array de favoritos
+                    if (p.find(function (el) { return el.name === value.name }) === undefined) {
+                        p.push(value);
+                        AsyncStorage.setItem('@favorites', JSON.stringify(p));
+                    } else {
+
+                        var filtered = p.filter(function (el, index, arr) {
+                            return el.name != value.name
+                        });
+
+                        AsyncStorage.setItem('@favorites', JSON.stringify(filtered));
+
+                    }
+
+
+                    if (favorite) {
+                        setFavorite(false);
+                    } else {
+                        setFavorite(true);
+                    }
+
+                });
+        } catch (e) {
+            // saving error
+        }
+    }
+
+
+
     return (
-        <ImagePerson source={{ uri: `https://lh3.googleusercontent.com/proxy/3eY70qHnypiEWQxReFg3CtVRXmGhxU9BL23lrsslNG-VTix1KqnRsMDtDVPQ7p7PqKHMYeyxGnxY5wTVY2gbwiicys_EKOk5yi0-wkYuhoN9TJ_U1ux4nc0m-Lny82GFq1tVkZnF25lQ8i9DaI2YQpV2211TLBdw` }}>
-            <Container>
 
-                <Info>
-                    <ImageMinor source={{ uri: `https://starwars-visualguide.com/assets/img/characters/${params.id}.jpg` }}>
-                    </ImageMinor>
+        <>
+            {loading === true && (
+                <ActivityIndicator size="large" color="#ffe81f" style={{ flex: 1, width: '100%', backgroundColor: '#111' }} />
+            )}
+            {loading === false && (
+                <ImagePerson source={{ uri: `https://starwars-visualguide.com/assets/img/characters/${params.id}.jpg` }}>
 
-                    <Name>
-                        {person.name}
-                    </Name>
+                    <Container>
 
-                    <BoxData>
-                        {/* <Icon></Icon> */}
-                        <TextData>Height: </TextData>
-                        <TextData>{person.height}</TextData>
-                    </BoxData>
+                        <Info>
+                            <ImageMinor source={{ uri: `https://starwars-visualguide.com/assets/img/characters/${params.id}.jpg` }}>
+                            </ImageMinor>
 
-                    <BoxData>
-                        {/* <Icon></Icon> */}
-                        <TextData>Mass: </TextData>
-                        <TextData>{person.mass}</TextData>
-                    </BoxData>
+                            <Name>
+                                {person.name}
+                            </Name>
 
-                    <BoxData>
-                        {/* <Icon></Icon> */}
-                        <TextData>Hair Color: </TextData>
-                        <TextData>{person.hair_color}</TextData>
-                    </BoxData>
+                            <BoxData>
+                                {/* <Icon></Icon> */}
+                                <TextData>Height: </TextData>
+                                <TextData>{person.height}</TextData>
+                            </BoxData>
 
-                    <BoxData>
-                        {/* <Icon></Icon> */}
-                        <TextData>Skin Color: </TextData>
-                        <TextData>{person.skin_color}</TextData>
-                    </BoxData>
+                            <BoxData>
+                                {/* <Icon></Icon> */}
+                                <TextData>Mass: </TextData>
+                                <TextData>{person.mass}</TextData>
+                            </BoxData>
 
-                    <BoxData>
-                        {/* <Icon></Icon> */}
-                        <TextData>Eye Color: </TextData>
-                        <TextData>{person.eye_color}</TextData>
-                    </BoxData>
+                            <BoxData>
+                                {/* <Icon></Icon> */}
+                                <TextData>Hair Color: </TextData>
+                                <TextData>{person.hair_color}</TextData>
+                            </BoxData>
 
-                    <BoxData>
-                        {/* <Icon></Icon> */}
-                        <TextData>Birth Year: </TextData>
-                        <TextData>{person.birth_year}</TextData>
-                    </BoxData>
+                            <BoxData>
+                                {/* <Icon></Icon> */}
+                                <TextData>Skin Color: </TextData>
+                                <TextData>{person.skin_color}</TextData>
+                            </BoxData>
 
-                    <BoxData>
-                        {/* <Icon></Icon> */}
-                        <TextData>Gender: </TextData>
-                        <TextData>{person.gender}</TextData>
-                    </BoxData>
+                            <BoxData>
+                                {/* <Icon></Icon> */}
+                                <TextData>Eye Color: </TextData>
+                                <TextData>{person.eye_color}</TextData>
+                            </BoxData>
 
-                    <BtnFavorite>
-                        <TextBtn>Favoritar</TextBtn>
-                    </BtnFavorite>
-                </Info>
-            </Container>
+                            <BoxData>
+                                {/* <Icon></Icon> */}
+                                <TextData>Birth Year: </TextData>
+                                <TextData>{person.birth_year}</TextData>
+                            </BoxData>
 
-        </ImagePerson>
+                            <BoxData>
+                                {/* <Icon></Icon> */}
+                                <TextData>Gender: </TextData>
+                                <TextData>{person.gender}</TextData>
+                            </BoxData>
+
+
+                            <BtnFavorite onPress={() => addFavorite(person)}>
+                                <Icon name={(favorite === false) ? 'heart-outline' : 'heart'} size={82} color="#ffe81f" />
+                                <TextBtn>{(favorite === false) ? 'Add to favorites' : ''}</TextBtn>
+                            </BtnFavorite>
+                        </Info>
+                    </Container>
+
+                </ImagePerson>
+            )}
+        </>
     )
 }
 

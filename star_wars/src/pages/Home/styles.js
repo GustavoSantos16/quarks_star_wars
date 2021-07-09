@@ -27,7 +27,7 @@ export const Item = styled.TouchableOpacity`
 
 
 export const ImagePerson = styled.Image`
- width:45px;
+ width:50px;
  height:100%;
  background:#222;
 `;

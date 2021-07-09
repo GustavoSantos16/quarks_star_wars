@@ -14,7 +14,7 @@ export const ImageMinor = styled.Image`
   height: 180px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 80px;
+  margin-top: 60px;
 `;
 
 
@@ -30,7 +30,7 @@ export const Name = styled.Text`
     color:#FFF;
     margin:0 auto;
     font-size: 22px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 `;
 
 export const BoxData = styled.View`
@@ -45,10 +45,8 @@ export const TextData = styled.Text`
 `;
 
 export const BtnFavorite = styled.TouchableOpacity`
-    background-color: #ffe81f;
-    width: 80%;
-    margin: 50px auto 0px auto;
-    height: 50px;
+    margin: 30px auto 0px auto;
+    height:auto;
     border-radius:5px;
 
     align-items:center;
@@ -58,9 +56,8 @@ export const BtnFavorite = styled.TouchableOpacity`
 
 
 export const TextBtn = styled.Text`
-    color: #000;
-    font-size: 18px;
-    font-weight: bold;
+    color: #fff;
+    font-size: 16px;
 `;
 
 
