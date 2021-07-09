@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Container, FlatList, Item, TextItem, Loading } from './styles';
+import { Container, FlatList, Item, TextItem, Loading, ImagePerson } from './styles';
 
 import api from '../../services/api';
 
 
-export default function Home() {
+export default function Home({ navigation }) {
     const [people, setPeople] = useState([]);
     const [page, setPage] = useState(1);
 
     const [loading, setLoading] = useState(false);
+
+
+    function seeDetails(url) {
+        var param = {
+            url: url
+        }
+        navigation.navigate('Details', { param });
+    }
 
     async function loadPeople(pageNumber = page, shouldRefresh = false) {
 
@@ -43,8 +51,12 @@ export default function Home() {
                 ListFooterComponent={loading && <Loading />}
                 keyExtractor={item => String(item.name)}
                 renderItem={({ item }) => {
+                    let id = item.url.split("/")[5];
+
                     return (
-                        <Item>
+                        <Item onPress={() => seeDetails(item.url)}>
+                            <ImagePerson source={{ uri: `https://starwars-visualguide.com/assets/img/characters/${id}.jpg` }}>
+                            </ImagePerson>
                             <TextItem>{item.name}</TextItem>
                         </Item>
                     );

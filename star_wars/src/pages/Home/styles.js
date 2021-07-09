@@ -15,17 +15,31 @@ export const FlatList = styled.FlatList.attrs({
 
 export const Item = styled.TouchableOpacity`
   width: 100%;
-  height: 40px;
+  height: 80px;
   margin: 1px 0px;
-  padding: 10px;
+  padding: 5px;
 
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+
+export const ImagePerson = styled.Image`
+ width:45px;
+ height:100%;
+ background:#222;
 `;
 
 export const TextItem = styled.Text`
   color: #fff;
+  font-size: 15px;
+  margin-left: 5px;
 `;
+
+
+
 
 export const Loading = styled.ActivityIndicator.attrs({
   size: 'small',
