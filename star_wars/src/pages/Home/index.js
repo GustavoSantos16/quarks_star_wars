@@ -66,3 +66,9 @@ export default function Home({ navigation }) {
     )
 }
 
+
+Home.navigationOptions = {
+    title: 'Home',
+    headerShown: false,
+}
+

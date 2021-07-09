@@ -100,3 +100,14 @@ export default function Details({ navigation }) {
     )
 }
 
+Details.navigationOptions = {
+    title: 'Details',
+    headerStyle: {
+        backgroundColor: '#111',
+    },
+    headerTintColor: '#ffffff',
+    headerTitleStyle: {
+        color: "#FFF"
+    },
+
+}
