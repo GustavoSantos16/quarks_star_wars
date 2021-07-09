@@ -12,10 +12,10 @@ export default function Home({ navigation }) {
 
 
     function seeDetails(url) {
-        var param = {
-            url: url
+        var params = {
+            id: url.split("/")[5]
         }
-        navigation.navigate('Details', { param });
+        navigation.navigate('Details', { params });
     }
 
     async function loadPeople(pageNumber = page, shouldRefresh = false) {
