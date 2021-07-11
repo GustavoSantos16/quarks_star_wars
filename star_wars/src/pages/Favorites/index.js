@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Container, FlatList, Item, TextItem, Loading, ImagePerson } from './styles';
-
-import api from '../../services/api';
+import { BackHandler } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import BottomNavigate from '../../components/BottomNavigate';
 
-
-export default function Home({ navigation }) {
+export default function Favorites({ navigation }) {
     const [people, setPeople] = useState([]);
-    const [page, setPage] = useState(1);
 
     const [loading, setLoading] = useState(false);
 
@@ -20,7 +18,7 @@ export default function Home({ navigation }) {
         navigation.navigate('Details', { params });
     }
 
-    async function loadPeople(pageNumber = page, shouldRefresh = false) {
+    async function loadPeople() {
 
         if (loading) {
             return;
@@ -29,24 +27,37 @@ export default function Home({ navigation }) {
         setLoading(true);
 
         try {
-            const response = await api.get(`/?page=${pageNumber}`);
-            setPeople(shouldRefresh ? response['data']['results'] : [...people, ...response['data']['results']]);
-            setPage(pageNumber + 1);
-            setLoading(false);
-        } catch (error) {
-            setLoading(false);
+            AsyncStorage.getItem('@favorites').then((people) => {
+                const p = people ? JSON.parse(people) : [];
+                setPeople(p);
+            });
+        } catch (e) {
+            // saving erro
         }
+
+        setLoading(false);
     }
 
     useEffect(() => {
-        loadPeople(1, false);
+        loadPeople();
+        const backAction = () => {
+            navigation.navigate('Home');
+            return true;
+        };
+
+        const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+        );
+
+        return () => backHandler.remove();
     }, [])
 
     return (
         <Container>
             <FlatList
                 data={people}
-                onEndReached={() => loadPeople(page, false)}
+                onEndReached={() => loadPeople()}
                 onEndReachedThreshold={0.2}
                 ListFooterComponent={loading && <Loading />}
                 keyExtractor={item => String(item.name)}
@@ -62,9 +73,7 @@ export default function Home({ navigation }) {
                     );
                 }}
             />
-            <BottomNavigate selected="home" openFavorites={() => navigation.navigate('Favorites')}></BottomNavigate>
+            <BottomNavigate selected="favorites" openHome={() => navigation.navigate('Home')}></BottomNavigate>
         </Container>
     )
 }
-
-

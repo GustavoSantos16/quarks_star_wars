@@ -42,8 +42,8 @@ export default function Details({ navigation }) {
 
     function verifyFavorite(value) {
         try {
-            AsyncStorage.getItem('@favorites').then((person) => {
-                const p = person ? JSON.parse(person) : [];
+            AsyncStorage.getItem('@favorites').then((people) => {
+                const p = people ? JSON.parse(people) : [];
                 //Verificando se já existe no array de favoritos
                 var verifyPerson = p.find((el) => {
                     return el.name === value.name
@@ -66,8 +66,8 @@ export default function Details({ navigation }) {
     const addFavorite = async (value) => {
         try {
             AsyncStorage.getItem('@favorites')
-                .then((person) => {
-                    const p = person ? JSON.parse(person) : [];
+                .then((people) => {
+                    const p = people ? JSON.parse(people) : [];
                     //Verificando se já existe no array de favoritos
                     if (p.find(function (el) { return el.name === value.name }) === undefined) {
                         p.push(value);
@@ -172,14 +172,14 @@ export default function Details({ navigation }) {
     )
 }
 
-Details.navigationOptions = {
-    title: 'Details',
-    headerStyle: {
-        backgroundColor: '#111',
-    },
-    headerTintColor: '#ffffff',
-    headerTitleStyle: {
-        color: "#FFF"
-    },
+// Details.navigationOptions = {
+//     title: 'Details',
+//     headerStyle: {
+//         backgroundColor: '#111',
+//     },
+//     headerTintColor: '#ffffff',
+//     headerTitleStyle: {
+//         color: "#FFF"
+//     },
 
-}
+// }
