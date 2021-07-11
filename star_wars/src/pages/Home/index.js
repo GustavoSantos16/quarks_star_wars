@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, FlatList, Item, TextItem, Loading, ImagePerson } from './styles';
+import { Container, Header, TextHeader, FlatList, Item, TextItem, Loading, ImagePerson } from './styles';
 
 import api from '../../services/api';
 
@@ -15,7 +15,8 @@ export default function Home({ navigation }) {
 
     function seeDetails(url) {
         var params = {
-            id: url.split("/")[5]
+            id: url.split("/")[5],
+            screen: 'Home'
         }
         navigation.navigate('Details', { params });
     }
@@ -43,27 +44,33 @@ export default function Home({ navigation }) {
     }, [])
 
     return (
-        <Container>
-            <FlatList
-                data={people}
-                onEndReached={() => loadPeople(page, false)}
-                onEndReachedThreshold={0.2}
-                ListFooterComponent={loading && <Loading />}
-                keyExtractor={item => String(item.name)}
-                renderItem={({ item }) => {
-                    let id = item.url.split("/")[5];
+        <>
+            <Header>
+                <TextHeader>Home</TextHeader>
+            </Header>
+            <Container>
 
-                    return (
-                        <Item onPress={() => seeDetails(item.url)}>
-                            <ImagePerson source={{ uri: `https://starwars-visualguide.com/assets/img/characters/${id}.jpg` }}>
-                            </ImagePerson>
-                            <TextItem>{item.name}</TextItem>
-                        </Item>
-                    );
-                }}
-            />
-            <BottomNavigate selected="home" openFavorites={() => navigation.navigate('Favorites')}></BottomNavigate>
-        </Container>
+                <FlatList
+                    data={people}
+                    onEndReached={() => loadPeople(page, false)}
+                    onEndReachedThreshold={0.2}
+                    ListFooterComponent={loading && <Loading />}
+                    keyExtractor={item => String(item.name)}
+                    renderItem={({ item }) => {
+                        let id = item.url.split("/")[5];
+
+                        return (
+                            <Item onPress={() => seeDetails(item.url)}>
+                                <ImagePerson source={{ uri: `https://starwars-visualguide.com/assets/img/characters/${id}.jpg` }}>
+                                </ImagePerson>
+                                <TextItem>{item.name}</TextItem>
+                            </Item>
+                        );
+                    }}
+                />
+                <BottomNavigate selected="home" openFavorites={() => navigation.navigate('Favorites')}></BottomNavigate>
+            </Container>
+        </>
     )
 }
 

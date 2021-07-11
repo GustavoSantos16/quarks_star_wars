@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, FlatList, Item, TextItem, Loading, ImagePerson } from './styles';
+import { Container, Header, TextHeader, FlatList, Item, TextItem, Loading, ImagePerson } from './styles';
 import { BackHandler } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -13,7 +13,8 @@ export default function Favorites({ navigation }) {
 
     function seeDetails(url) {
         var params = {
-            id: url.split("/")[5]
+            id: url.split("/")[5],
+            screen: 'Favorites'
         }
         navigation.navigate('Details', { params });
     }
@@ -54,26 +55,31 @@ export default function Favorites({ navigation }) {
     }, [])
 
     return (
-        <Container>
-            <FlatList
-                data={people}
-                onEndReached={() => loadPeople()}
-                onEndReachedThreshold={0.2}
-                ListFooterComponent={loading && <Loading />}
-                keyExtractor={item => String(item.name)}
-                renderItem={({ item }) => {
-                    let id = item.url.split("/")[5];
+        <>
+            <Header>
+                <TextHeader>Favorites</TextHeader>
+            </Header>
+            <Container>
+                <FlatList
+                    data={people}
+                    onEndReached={() => loadPeople()}
+                    onEndReachedThreshold={0.2}
+                    ListFooterComponent={loading && <Loading />}
+                    keyExtractor={item => String(item.name)}
+                    renderItem={({ item }) => {
+                        let id = item.url.split("/")[5];
 
-                    return (
-                        <Item onPress={() => seeDetails(item.url)}>
-                            <ImagePerson source={{ uri: `https://starwars-visualguide.com/assets/img/characters/${id}.jpg` }}>
-                            </ImagePerson>
-                            <TextItem>{item.name}</TextItem>
-                        </Item>
-                    );
-                }}
-            />
-            <BottomNavigate selected="favorites" openHome={() => navigation.navigate('Home')}></BottomNavigate>
-        </Container>
+                        return (
+                            <Item onPress={() => seeDetails(item.url)}>
+                                <ImagePerson source={{ uri: `https://starwars-visualguide.com/assets/img/characters/${id}.jpg` }}>
+                                </ImagePerson>
+                                <TextItem>{item.name}</TextItem>
+                            </Item>
+                        );
+                    }}
+                />
+                <BottomNavigate selected="favorites" openHome={() => navigation.navigate('Home')}></BottomNavigate>
+            </Container>
+        </>
     )
 }

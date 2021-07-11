@@ -4,6 +4,24 @@ export const Container = styled.View`
   flex:1;
 `;
 
+
+export const Header = styled.View`
+   width:100%;
+   height:60px;
+   align-items:center;
+   background:#000;
+   justify-content:center;
+`;
+
+export const TextHeader = styled.Text`
+    /* color:#222455; */
+    color:#fff;
+    font-size:15px;
+    font-weight:700;
+`;
+
+
+
 export const ImagePerson = styled.ImageBackground`
   width:100%;
   height: 100%;

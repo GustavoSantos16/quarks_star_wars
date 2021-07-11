@@ -5,7 +5,7 @@ import api from '../../services/api';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { Container, ImagePerson, ImageMinor, Info, Name, BoxData, TextData, BtnFavorite, TextBtn } from './styles';
+import { Container, Header, TextHeader, ImagePerson, ImageMinor, Info, Name, BoxData, TextData, BtnFavorite, TextBtn } from './styles';
 
 export default function Details({ navigation }) {
     const params = navigation.getParam('params');
@@ -24,10 +24,14 @@ export default function Details({ navigation }) {
         verifyFavorite(response['data']);
     }
 
+    function back() {
+        navigation.navigate(params.screen);
+    }
+
     useEffect(() => {
         loadPerson();
         const backAction = () => {
-            navigation.navigate('Home');
+            back();
             return true;
         };
 
@@ -100,14 +104,19 @@ export default function Details({ navigation }) {
     return (
 
         <>
+            <Header>
+                <Icon name="arrow-back" size={22} color="#FFF" style={{ position: 'absolute', left: 15 }} onPress={() => back()} />
+                <TextHeader>Details</TextHeader>
+            </Header>
+
             {loading === true && (
                 <ActivityIndicator size="large" color="#ffe81f" style={{ flex: 1, width: '100%', backgroundColor: '#111' }} />
             )}
             {loading === false && (
+
                 <ImagePerson source={{ uri: `https://starwars-visualguide.com/assets/img/characters/${params.id}.jpg` }}>
 
                     <Container>
-
                         <Info>
                             <ImageMinor source={{ uri: `https://starwars-visualguide.com/assets/img/characters/${params.id}.jpg` }}>
                             </ImageMinor>
