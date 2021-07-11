@@ -5,7 +5,7 @@ import api from '../../services/api';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { Container, Header, TextHeader, ImagePerson, ImageMinor, Info, Name, BoxData, TextData, BtnFavorite, TextBtn } from './styles';
+import { Container, Scroll, Header, TextHeader, ImagePerson, ImageMinor, Info, Name, BoxData, TextData, BtnFavorite, TextBtn } from './styles';
 
 export default function Details({ navigation }) {
     const params = navigation.getParam('params');
@@ -117,61 +117,66 @@ export default function Details({ navigation }) {
                 <ImagePerson source={{ uri: `https://starwars-visualguide.com/assets/img/characters/${params.id}.jpg` }}>
 
                     <Container>
+
                         <Info>
-                            <ImageMinor source={{ uri: `https://starwars-visualguide.com/assets/img/characters/${params.id}.jpg` }}>
-                            </ImageMinor>
-
-                            <Name>
-                                {person.name}
-                            </Name>
-
-                            <BoxData>
-                                {/* <Icon></Icon> */}
-                                <TextData>Height: </TextData>
-                                <TextData>{person.height}</TextData>
-                            </BoxData>
-
-                            <BoxData>
-                                {/* <Icon></Icon> */}
-                                <TextData>Mass: </TextData>
-                                <TextData>{person.mass}</TextData>
-                            </BoxData>
-
-                            <BoxData>
-                                {/* <Icon></Icon> */}
-                                <TextData>Hair Color: </TextData>
-                                <TextData>{person.hair_color}</TextData>
-                            </BoxData>
-
-                            <BoxData>
-                                {/* <Icon></Icon> */}
-                                <TextData>Skin Color: </TextData>
-                                <TextData>{person.skin_color}</TextData>
-                            </BoxData>
-
-                            <BoxData>
-                                {/* <Icon></Icon> */}
-                                <TextData>Eye Color: </TextData>
-                                <TextData>{person.eye_color}</TextData>
-                            </BoxData>
-
-                            <BoxData>
-                                {/* <Icon></Icon> */}
-                                <TextData>Birth Year: </TextData>
-                                <TextData>{person.birth_year}</TextData>
-                            </BoxData>
-
-                            <BoxData>
-                                {/* <Icon></Icon> */}
-                                <TextData>Gender: </TextData>
-                                <TextData>{person.gender}</TextData>
-                            </BoxData>
+                            <Scroll>
 
 
-                            <BtnFavorite onPress={() => addFavorite(person)}>
-                                <Icon name={(favorite === false) ? 'heart-outline' : 'heart'} size={82} color="#ffe81f" />
-                                <TextBtn>{(favorite === false) ? 'Add to favorites' : ''}</TextBtn>
-                            </BtnFavorite>
+                                <ImageMinor source={{ uri: `https://starwars-visualguide.com/assets/img/characters/${params.id}.jpg` }}>
+                                </ImageMinor>
+
+                                <Name>
+                                    {person.name}
+                                </Name>
+
+                                <BoxData>
+                                    {/* <Icon></Icon> */}
+                                    <TextData>Height: </TextData>
+                                    <TextData>{person.height}</TextData>
+                                </BoxData>
+
+                                <BoxData>
+                                    {/* <Icon></Icon> */}
+                                    <TextData>Mass: </TextData>
+                                    <TextData>{person.mass}</TextData>
+                                </BoxData>
+
+                                <BoxData>
+                                    {/* <Icon></Icon> */}
+                                    <TextData>Hair Color: </TextData>
+                                    <TextData>{person.hair_color}</TextData>
+                                </BoxData>
+
+                                <BoxData>
+                                    {/* <Icon></Icon> */}
+                                    <TextData>Skin Color: </TextData>
+                                    <TextData>{person.skin_color}</TextData>
+                                </BoxData>
+
+                                <BoxData>
+                                    {/* <Icon></Icon> */}
+                                    <TextData>Eye Color: </TextData>
+                                    <TextData>{person.eye_color}</TextData>
+                                </BoxData>
+
+                                <BoxData>
+                                    {/* <Icon></Icon> */}
+                                    <TextData>Birth Year: </TextData>
+                                    <TextData>{person.birth_year}</TextData>
+                                </BoxData>
+
+                                <BoxData>
+                                    {/* <Icon></Icon> */}
+                                    <TextData>Gender: </TextData>
+                                    <TextData>{person.gender}</TextData>
+                                </BoxData>
+
+
+                                <BtnFavorite onPress={() => addFavorite(person)}>
+                                    <Icon name={(favorite === false) ? 'heart-outline' : 'heart'} size={82} color="#ffe81f" />
+                                    <TextBtn>{(favorite === false) ? 'Add to favorites' : ''}</TextBtn>
+                                </BtnFavorite>
+                            </Scroll>
                         </Info>
                     </Container>
 

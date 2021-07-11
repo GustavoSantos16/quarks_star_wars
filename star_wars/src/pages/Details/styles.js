@@ -4,6 +4,11 @@ export const Container = styled.View`
   flex:1;
 `;
 
+export const Scroll = styled.ScrollView` 
+  
+`;
+
+
 
 export const Header = styled.View`
    width:100%;
@@ -66,6 +71,7 @@ export const BtnFavorite = styled.TouchableOpacity`
     margin: 30px auto 0px auto;
     height:auto;
     border-radius:5px;
+    margin-bottom: 100px;
 
     align-items:center;
     justify-content:center;
