@@ -13,14 +13,15 @@ export default function Home({ navigation }) {
     const [loading, setLoading] = useState(false);
 
 
-    function seeDetails(url) {
+    function seeDetails(url) { //Navegar até a pagina detalhes
         var params = {
-            id: url.split("/")[5],
-            screen: 'Home'
+            id: url.split("/")[5], //Id do personagem
+            screen: 'Home'//tela de partida, serve para voltar a origem ao clicar em voltar em detalhes
         }
         navigation.navigate('Details', { params });
     }
 
+    //Carregar a lista de personagens a partir da api e realizar a paginação
     async function loadPeople(pageNumber = page, shouldRefresh = false) {
 
         if (loading) {

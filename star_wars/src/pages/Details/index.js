@@ -14,6 +14,8 @@ export default function Details({ navigation }) {
     const [loading, setLoading] = useState(false);
     const [favorite, setFavorite] = useState(false);
 
+
+    //Carregar personagem selecionado passando o id como parametro
     async function loadPerson() {
         setLoading(true);
 
@@ -24,12 +26,14 @@ export default function Details({ navigation }) {
         verifyFavorite(response['data']);
     }
 
-    function back() {
+    function back() { //Voltar para a tela anterior
         navigation.navigate(params.screen);
     }
 
     useEffect(() => {
         loadPerson();
+
+        //Tratando botão de voltar do hardware, para não fechar a aplicação
         const backAction = () => {
             back();
             return true;
@@ -44,6 +48,7 @@ export default function Details({ navigation }) {
     }, [])
 
 
+    //Verificando a situação do personagem para marcar se ele ja está favoritado ou não
     function verifyFavorite(value) {
         try {
             AsyncStorage.getItem('@favorites').then((people) => {
@@ -66,7 +71,7 @@ export default function Details({ navigation }) {
         }
     }
 
-
+    //Adicionando ou removendo um personagem dos favoritos
     const addFavorite = async (value) => {
         try {
             AsyncStorage.getItem('@favorites')
@@ -130,43 +135,36 @@ export default function Details({ navigation }) {
                                 </Name>
 
                                 <BoxData>
-                                    {/* <Icon></Icon> */}
                                     <TextData>Height: </TextData>
                                     <TextData>{person.height}</TextData>
                                 </BoxData>
 
                                 <BoxData>
-                                    {/* <Icon></Icon> */}
                                     <TextData>Mass: </TextData>
                                     <TextData>{person.mass}</TextData>
                                 </BoxData>
 
                                 <BoxData>
-                                    {/* <Icon></Icon> */}
                                     <TextData>Hair Color: </TextData>
                                     <TextData>{person.hair_color}</TextData>
                                 </BoxData>
 
                                 <BoxData>
-                                    {/* <Icon></Icon> */}
                                     <TextData>Skin Color: </TextData>
                                     <TextData>{person.skin_color}</TextData>
                                 </BoxData>
 
                                 <BoxData>
-                                    {/* <Icon></Icon> */}
                                     <TextData>Eye Color: </TextData>
                                     <TextData>{person.eye_color}</TextData>
                                 </BoxData>
 
                                 <BoxData>
-                                    {/* <Icon></Icon> */}
                                     <TextData>Birth Year: </TextData>
                                     <TextData>{person.birth_year}</TextData>
                                 </BoxData>
 
                                 <BoxData>
-                                    {/* <Icon></Icon> */}
                                     <TextData>Gender: </TextData>
                                     <TextData>{person.gender}</TextData>
                                 </BoxData>
@@ -185,15 +183,3 @@ export default function Details({ navigation }) {
         </>
     )
 }
-
-// Details.navigationOptions = {
-//     title: 'Details',
-//     headerStyle: {
-//         backgroundColor: '#111',
-//     },
-//     headerTintColor: '#ffffff',
-//     headerTitleStyle: {
-//         color: "#FFF"
-//     },
-
-// }

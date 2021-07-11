@@ -19,6 +19,7 @@ export default function Favorites({ navigation }) {
         navigation.navigate('Details', { params });
     }
 
+    //Carregar lista de personagens que foram favoritados
     async function loadPeople() {
 
         if (loading) {
